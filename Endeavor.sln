@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36908.2 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Endeavor", "Endeavor\Endeavor.vcxproj", "{F8E27667-5CA6-4BF2-88AC-6E8C5D2E9F35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8E27667-5CA6-4BF2-88AC-6E8C5D2E9F35}.Debug|x64.ActiveCfg = Debug|x64
+		{F8E27667-5CA6-4BF2-88AC-6E8C5D2E9F35}.Debug|x64.Build.0 = Debug|x64
+		{F8E27667-5CA6-4BF2-88AC-6E8C5D2E9F35}.Release|x64.ActiveCfg = Release|x64
+		{F8E27667-5CA6-4BF2-88AC-6E8C5D2E9F35}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22DE64BD-D00B-4384-B6BE-17E046E806EB}
+	EndGlobalSection
+EndGlobal

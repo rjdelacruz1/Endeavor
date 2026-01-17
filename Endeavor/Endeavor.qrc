@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Endeavor"/>
+    <qresource prefix="/new/images">
+        <file>EndeavorBannerGif.gif</file>
+        <file>EndeavorBannerNoTetonicGif.gif</file>
+    </qresource>
+</RCC>
