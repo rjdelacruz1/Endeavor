@@ -92,15 +92,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TasksWindow.cpp" />
     <QtRcc Include="Endeavor.qrc" />
     <QtUic Include="Endeavor.ui" />
     <QtMoc Include="Endeavor.h" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Endeavor.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="TasksWindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Commands.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="TasksWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

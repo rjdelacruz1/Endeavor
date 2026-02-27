@@ -1,5 +1,5 @@
 #include "Commands.h"
-#include <qtimer.h>
+#include <QTimer>
 Commands::Commands(QObject* parent)
 	: QObject(parent)
 {
@@ -13,7 +13,12 @@ void Commands::handle(const QString& input)
 
 	const QString upper = cmd.toUpper();
 	if (upper == "EXIT" || upper == "QUIT" || upper == "QQ") {
-		Commands::exitCommand();
+		exitCommand();
+		return;
+	}
+
+	if (upper == "TASKS" || upper == "TASK") {
+		taskCommand();
 		return;
 	}
 	
@@ -27,4 +32,6 @@ void Commands::exitCommand()
 		emit exitRequested();
 		});
 }
-void Commands::taskCommand(){}
+void Commands::taskCommand(){
+	emit tasksRequested("Opening Tasks Window.");
+}

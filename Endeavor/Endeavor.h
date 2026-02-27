@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_Endeavor.h"
+#include "TasksWindow.h"
 #include "Commands.h"
 #include <QMovie>
 #include <QPoint>
@@ -23,6 +24,9 @@ protected:
 
 private:
     Ui::EndeavorClass ui;
+
+    TasksWindow* tasksWindow = nullptr;
+    
     Commands* commands = nullptr;
     void setEndeavorWindowSpecifications();
     void setEndeavorBanner();

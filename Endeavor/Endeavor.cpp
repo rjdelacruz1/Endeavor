@@ -1,4 +1,5 @@
 #include "Endeavor.h"
+#include "TasksWindow.h"
 #include <QMovie>
 #include <QLabel>
 
@@ -11,6 +12,8 @@ Endeavor::Endeavor(QWidget *parent)
     setEndeavorBanner();
     
     commands = new Commands(this);
+    tasksWindow = new TasksWindow(this);
+
     connect(ui.commandEntry, &QLineEdit::returnPressed, this, [this](){
         QString text = ui.commandEntry->text();
         ui.commandEntry->clear();
@@ -23,7 +26,13 @@ Endeavor::Endeavor(QWidget *parent)
     connect(commands, &Commands::outputRequested, this, [this](const QString& line) {
         ui.output->appendPlainText("> " + line);
         });
-
+    
+    connect(commands, &Commands::tasksRequested, this, [this](const QString& line) {
+        ui.output->appendPlainText("> " + line);
+        tasksWindow->show();
+        tasksWindow->raise();
+        tasksWindow->activateWindow();
+        });
     connect(commands, &Commands::exitRequested, this, &QWidget::close);
 }
 

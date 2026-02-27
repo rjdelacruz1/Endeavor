@@ -13,5 +13,6 @@ public:
 signals:
 	void exitRequested();
 	void outputRequested(const QString& line);
+	void tasksRequested(const QString& line);
 };
 
