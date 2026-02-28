@@ -99,7 +99,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Edit/Add Tasks</string>
+          <string>Add/Edit Tasks</string>
          </property>
         </widget>
        </item>
