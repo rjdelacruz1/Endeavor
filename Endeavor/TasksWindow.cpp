@@ -5,16 +5,25 @@ TasksWindow::TasksWindow(QWidget* parent)
 {
 	ui.setupUi(this);
 	setTasksWindowSpecifications();
+	taskPath = taskFile.taskFilePath();
+	taskFile.load(taskPath);
 
+	//Enables addButton when text is entered into the line edit
 	connect(ui.taskAddEditLineEdit, &QLineEdit::textChanged, this, [this](const QString& t) {
 		ui.addButton->setEnabled(!t.trimmed().isEmpty());
 		});
+	//Adds click functionality to addButton
 	connect(ui.addButton, &QPushButton::clicked, this, [this]() {
 		addTaskEntry();
 	});
+	//Adds enter key functionality to QLineEdit
 	connect(ui.taskAddEditLineEdit, &QLineEdit::returnPressed, this, [this]() {
 		addTaskEntry();
 	});
+
+	//The following two connect calls allow for tasks in the currentTasksList and oldTasksList respectively to move
+	//to the completedTasksList once they are checked. The 3rd connect call allowed items in the completedTasksList
+	//to move back to the currentTasksList.
 	connect(ui.currentTasksList, &QListWidget::itemChanged, this, [this](QListWidgetItem* item) {
 		if (!item)
 			return;
@@ -36,6 +45,9 @@ TasksWindow::TasksWindow(QWidget* parent)
 			moveTaskItem(ui.completedTasksList, ui.currentTasksList, item);
 		}
 	});
+
+	//Allows editing of selected items in the currentTasksList by populating the taskAddEditLineEdit once a task
+	//is highlighted.
 	connect(ui.currentTasksList, &QListWidget::itemSelectionChanged, this, [this]() {
 		auto* item = ui.currentTasksList->currentItem();
 		if (!item)

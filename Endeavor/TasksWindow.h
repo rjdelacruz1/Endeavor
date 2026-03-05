@@ -2,8 +2,9 @@
 
 #include <QMainWindow>
 #include "ui_TasksWindow.h"
-#include "QLabel"
-#include "QListWidgetItem"
+#include "TaskFile.h"
+#include <QLabel>
+#include <QListWidgetItem>
 
 class TasksWindow : public QMainWindow
 {
@@ -15,6 +16,8 @@ public:
 
 private:
 	Ui::TasksWindowClass ui;
+	TaskFile taskFile;
+	QString taskPath = taskFile.taskFilePath();
 
 	void setTasksWindowSpecifications();
 	void addTaskEntry();
