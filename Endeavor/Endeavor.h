@@ -30,6 +30,7 @@ private:
     Commands* commands = nullptr;
     void setEndeavorWindowSpecifications();
     void setEndeavorBanner();
+    void setUpConnections();
     
     //For displaying custom banner
     QMovie* introGif = nullptr; //with tetonic animation affect

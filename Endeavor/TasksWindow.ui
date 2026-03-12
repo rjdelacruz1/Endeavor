@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1138</width>
-    <height>1075</height>
+    <width>1123</width>
+    <height>1062</height>
    </rect>
   </property>
   <property name="baseSize">
@@ -117,13 +117,29 @@
            <height>25</height>
           </size>
          </property>
+         <property name="placeholderText">
+          <string>Enter new Tasks here...</string>
+         </property>
         </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="innerHorizontalLayout">
          <property name="leftMargin">
-          <number>125</number>
+          <number>0</number>
          </property>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
          <item>
           <widget class="QPushButton" name="addButton">
            <property name="sizePolicy">
@@ -140,6 +156,58 @@
            </property>
            <property name="text">
             <string>Add Task</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="confirmEdit">
+           <property name="minimumSize">
+            <size>
+             <width>125</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Confirm Edit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="cancelEdit">
+           <property name="minimumSize">
+            <size>
+             <width>125</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Cancel Edit</string>
            </property>
           </widget>
          </item>
@@ -379,6 +447,9 @@
          <width>1000</width>
          <height>25</height>
         </size>
+       </property>
+       <property name="placeholderText">
+        <string>Enter Commands here...</string>
        </property>
       </widget>
      </item>

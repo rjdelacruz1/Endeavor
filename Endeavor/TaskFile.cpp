@@ -46,7 +46,7 @@ bool TaskFile::load(const QString& path)
 }
 QString TaskFile::taskFilePath() const
 {
-	const QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+	const QString dir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 	QDir().mkpath(dir);
 	return dir + "/tasks.json";
 }

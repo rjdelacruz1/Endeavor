@@ -10,30 +10,11 @@ Endeavor::Endeavor(QWidget *parent)
     ui.setupUi(this);
     setEndeavorWindowSpecifications();
     setEndeavorBanner();
-    
+
     commands = new Commands(this);
     tasksWindow = new TasksWindow(this);
 
-    connect(ui.commandEntry, &QLineEdit::returnPressed, this, [this](){
-        QString text = ui.commandEntry->text();
-        ui.commandEntry->clear();
-        text.remove(0,2);
-        commands->handle(text);
-        ui.commandEntry->setText("> ");
-        ui.commandEntry->setCursorPosition(2);
-    });
-
-    connect(commands, &Commands::outputRequested, this, [this](const QString& line) {
-        ui.output->appendPlainText("> " + line);
-        });
-    
-    connect(commands, &Commands::tasksRequested, this, [this](const QString& line) {
-        ui.output->appendPlainText("> " + line);
-        tasksWindow->show();
-        tasksWindow->raise();
-        tasksWindow->activateWindow();
-        });
-    connect(commands, &Commands::exitRequested, this, &QWidget::close);
+    setUpConnections();
 }
 
 void Endeavor::setEndeavorWindowSpecifications()
@@ -110,6 +91,28 @@ void Endeavor::setEndeavorBanner()
             finalGif->start();
         }
         });
+}
+void Endeavor::setUpConnections() {
+    connect(ui.commandEntry, &QLineEdit::returnPressed, this, [this]() {
+        QString text = ui.commandEntry->text();
+        ui.commandEntry->clear();
+        text.remove(0, 2);
+        commands->handle(text);
+        ui.commandEntry->setText("> ");
+        ui.commandEntry->setCursorPosition(2);
+        });
+
+    connect(commands, &Commands::outputRequested, this, [this](const QString& line) {
+        ui.output->appendPlainText("> " + line);
+        });
+
+    connect(commands, &Commands::tasksRequested, this, [this](const QString& line) {
+        ui.output->appendPlainText("> " + line);
+        tasksWindow->show();
+        tasksWindow->raise();
+        tasksWindow->activateWindow();
+        });
+    connect(commands, &Commands::exitRequested, this, &QWidget::close);
 }
 bool Endeavor::eventFilter(QObject* obj, QEvent* event)
 {

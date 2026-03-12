@@ -8,6 +8,10 @@ struct Task {
 	QDateTime date;
 	bool completed = false;
 
+	Task() = default;
+	Task(QString text, QDateTime date, bool completed)
+		: text(text), date(date), completed(false){ }
+
 	QJsonObject toJson() const{
 		QJsonObject obj;
 		obj["text"] = text;
