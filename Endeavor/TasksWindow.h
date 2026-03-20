@@ -8,6 +8,7 @@
 #include <QListWidgetItem>
 #include <QVector>
 #include <QObject>
+#include <QCloseEvent>
 
 class TasksWindow : public QMainWindow
 {
@@ -33,5 +34,7 @@ private:
 	void enterEditMode(QListWidgetItem* item);
 	void confirmEdit();
 	void exitEditMode();
+	void syncTasksFromList();
+	void closeEvent(QCloseEvent* event);
 };
 

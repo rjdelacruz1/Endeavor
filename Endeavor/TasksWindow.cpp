@@ -120,16 +120,16 @@ void TasksWindow::setTasksWindowSpecifications()
 	*/
 }
 void TasksWindow::setUpConnections() {
-	//Enables addButton when text is entered into the line edit
+	//Enables addButton when text is entered into the line edit. 
 	connect(ui.taskAddEditLineEdit, &QLineEdit::textChanged, this, [this](const QString& t) {
 		const bool hasText = !(t.trimmed().isEmpty());
 		ui.addButton->setEnabled(itemBeingEdited==nullptr && hasText);
 		});
+	
 	//Adds click functionality to addButton
-	connect(ui.addButton, &QPushButton::clicked, this, [this]() {
-		addTaskEntry();
-		});
-	//Adds enter key functionality to QLineEdit
+	connect(ui.addButton, &QPushButton::clicked, this, &TasksWindow::addTaskEntry);
+
+	//Adds enter key functionality to QLineEdit. Works with adding new tasks or confirming edited tasks.
 	connect(ui.taskAddEditLineEdit, &QLineEdit::returnPressed, this, [this]() {
 		if (itemBeingEdited)
 			confirmEdit();
@@ -163,7 +163,7 @@ void TasksWindow::setUpConnections() {
 		}
 		});
 
-	//
+	//For handling editing of currentTasksList and oldTasksList
 	connect(ui.currentTasksList, &QListWidget::itemSelectionChanged, this, &TasksWindow::handleListSelection);
 	connect(ui.oldTasksList, &QListWidget::itemSelectionChanged, this, &TasksWindow::handleListSelection);
 	
@@ -171,7 +171,7 @@ void TasksWindow::setUpConnections() {
 	connect(ui.confirmEdit, &QPushButton::clicked, this, &TasksWindow::confirmEdit);
 	
 	//Cancel Edit connection
-	connect(ui.cancelEdit, &QPushButton::clicked, this, &TasksWindow::exitEditMode);
+	connect(ui.cancelEdit, &QPushButton::clicked, this, &TasksWindow::exitEditMode);	
 
 }
 void TasksWindow::addTaskEntry() {
@@ -182,10 +182,12 @@ void TasksWindow::addTaskEntry() {
 	auto *item = new QListWidgetItem(text);
 	item->setFlags(item->flags()|Qt::ItemIsUserCheckable|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 	item->setCheckState(Qt::Unchecked);
+	item->setData(Qt::UserRole, QDateTime::currentDateTime());
 	ui.currentTasksList->insertItem(0,item);
 
 	Task t(text, QDateTime::currentDateTime(), false);
 	taskFile.tasks.append(t);
+	syncTasksFromList();
 	taskFile.save(taskPath);
 
 	ui.taskAddEditLineEdit->clear();
@@ -203,22 +205,40 @@ void TasksWindow::moveTaskItem(QListWidget* from, QListWidget* to, QListWidgetIt
 
 	const int row = from->row(item);
 	const Qt::ItemFlags flags = item->flags();
+	const QDateTime date = item->data(Qt::UserRole).toDateTime();
 	delete from->takeItem(row);
 
 	auto* newItem = new QListWidgetItem(text);
 	
 	if (to == ui.completedTasksList) {
 		newItem->setFlags(flags | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		newItem->setData(Qt::UserRole, date);
 		QFont font = newItem->font();
 		font.setStrikeOut(true);
 		newItem->setFont(font);
 		newItem->setCheckState(state);
 		to->insertItem(0,newItem);
+		syncTasksFromList();
+		taskFile.save(taskPath);
+	}
+	else if (from == ui.completedTasksList) {
+		newItem->setFlags(flags | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		newItem->setData(Qt::UserRole, date);
+		QFont font = newItem->font();
+		font.setStrikeOut(false);
+		newItem->setFont(font);
+		newItem->setCheckState(state);
+		to->insertItem(0, newItem);
+		syncTasksFromList();
+		taskFile.save(taskPath);
 	}
 	else {
 		newItem->setFlags(flags | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		newItem->setData(Qt::UserRole, date);
 		newItem->setCheckState(state);
 		to->addItem(newItem);
+		syncTasksFromList();
+		taskFile.save(taskPath);
 	}
 
 	
@@ -233,6 +253,7 @@ void TasksWindow::populateLists(const QVector<Task>& v)
 		const QString text = t.text;
 		auto* item = new QListWidgetItem(text);
 		item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		item->setData(Qt::UserRole,t.date);
 		QFont font = item->font();
 		if (t.completed==true)
 		{
@@ -292,6 +313,8 @@ void TasksWindow::confirmEdit() {
 		return;
 
 	itemBeingEdited->setText(text);
+	syncTasksFromList();
+	taskFile.save(taskPath);
 	exitEditMode();
 }
 void TasksWindow::exitEditMode() {
@@ -311,8 +334,35 @@ void TasksWindow::exitEditMode() {
 	ui.taskAddEditLineEdit->clear();
 	
 
-	ui.addButton->setEnabled(true);
+	ui.addButton->setEnabled(false);
 	ui.confirmEdit->setEnabled(false);
+}
+void TasksWindow::syncTasksFromList() {
+	taskFile.tasks.clear();
+
+	auto collectFromList = [this](QListWidget* list, bool completed) {
+		for (int i = 0; i < list->count(); ++i) {
+			QListWidgetItem* item = list->item(i);
+			if (!item)
+				continue;
+			Task t;
+			t.text = item->text();
+			t.completed = completed;
+			t.date = item->data(Qt::UserRole).toDateTime();
+
+			taskFile.tasks.push_back(t);
+
+		}
+	};
+	
+	collectFromList(ui.currentTasksList, false);
+	collectFromList(ui.oldTasksList, false);
+	collectFromList(ui.completedTasksList, true);
+}
+void TasksWindow::closeEvent(QCloseEvent* event) {
+	syncTasksFromList();
+	taskFile.save(taskPath);
+	QMainWindow::closeEvent(event);
 }
 TasksWindow::~TasksWindow()
 {}
