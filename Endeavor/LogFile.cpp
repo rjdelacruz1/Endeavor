@@ -1,21 +1,21 @@
-#include "TaskFile.h"
+#include "LogFile.h"
 
-bool TaskFile::save(const QString& path) const 
+bool LogFile::save(const QString& path) const
 {
 	QJsonArray arr;
-	for (const auto& t : tasks)
-		arr.append(t.toJson());
+	for (auto i = logs.cbegin(); i != logs.cend(); ++i)
+		arr.append(i.value().toJson());
 
 	QJsonDocument doc(arr);
 
 	QFile f(path);
-	if(!f.open(QIODevice::WriteOnly))
+	if (!f.open(QIODevice::WriteOnly))
 		return false;
 
 	f.write(doc.toJson(QJsonDocument::Indented));
 	return true;
 }
-bool TaskFile::load(const QString& path)
+bool LogFile::load(const QString& path)
 {
 	QFile f(path);
 	if (!f.exists())
@@ -31,16 +31,20 @@ bool TaskFile::load(const QString& path)
 	if (err.error != QJsonParseError::NoError || !doc.isArray())
 		return false;
 
-	tasks.clear();
+	logs.clear();
 	for (const auto& v : doc.array()) {
-		if (v.isObject())
-			tasks.push_back(Task::fromJson(v.toObject()));
+		if (!v.isObject())
+			continue;
+
+		Log logEntry = Log::fromJson(v.toObject());
+		if (logEntry.date.isValid())
+			logs[logEntry.date] = logEntry;
 	}
 	return true;
 }
-QString TaskFile::taskFilePath() const
-{
+
+QString LogFile::logFilePath() const {
 	const QString dir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 	QDir().mkpath(dir);
-	return dir + "/tasks.json";
-}
+	return dir + "/logs.json";
+};

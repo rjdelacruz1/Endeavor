@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1123</width>
-    <height>1062</height>
+    <height>1063</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1123</width>
+    <height>1063</height>
+   </size>
   </property>
   <property name="baseSize">
    <size>

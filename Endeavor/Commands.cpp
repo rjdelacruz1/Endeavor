@@ -9,6 +9,10 @@ Commands::Commands(QObject* parent)
 
 	commandMap["TASK"] = "TASK";
 	commandMap["TASKS"] = "TASK";
+
+	commandMap["LOG"] = "LOG";
+	commandMap["DIARY"] = "LOG";
+
 }
 void Commands::handle(const QString& input)
 {
@@ -25,6 +29,11 @@ void Commands::handle(const QString& input)
 
 	if (upper == "TASK") {
 		taskCommand();
+		return;
+	}
+
+	if (upper == "LOG") {
+		logCommand();
 		return;
 	}
 	
@@ -47,5 +56,16 @@ void Commands::exitCommand()
 		});
 }
 void Commands::taskCommand(){
-	emit tasksRequested("Opening Tasks Window.");
+	emit outputRequested("Opening Tasks Window.");
+	
+	QTimer::singleShot(600, this, [this]() {
+		emit tasksRequested();
+		});
+}
+void Commands::logCommand() {
+	emit outputRequested("Opening Log Window.");
+
+	QTimer::singleShot(600, this, [this]() {
+		emit logRequested();
+		});
 }

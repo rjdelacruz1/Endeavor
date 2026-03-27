@@ -10,7 +10,7 @@ struct Task {
 
 	Task() = default;
 	Task(QString text, QDateTime date, bool completed)
-		: text(text), date(date), completed(false){ }
+		: text(text), date(date), completed(false){ }	
 
 	QJsonObject toJson() const{
 		QJsonObject obj;

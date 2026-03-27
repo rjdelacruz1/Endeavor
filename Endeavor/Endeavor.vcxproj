@@ -92,6 +92,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LogFile.cpp" />
+    <ClCompile Include="LogWindow.cpp" />
     <ClCompile Include="TaskFile.cpp" />
     <ClCompile Include="TasksWindow.cpp" />
     <QtRcc Include="Endeavor.qrc" />
@@ -100,6 +102,7 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Endeavor.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="LogWindow.ui" />
     <QtUic Include="TasksWindow.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +112,9 @@
     <QtMoc Include="TasksWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="LogWindow.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="LogFile.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="TaskFile.h" />
   </ItemGroup>

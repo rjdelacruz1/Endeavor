@@ -10,11 +10,13 @@ public:
 	void handle(const QString& input);
 	void exitCommand();
 	void taskCommand();
+	void logCommand();
 
 signals:
 	void exitRequested();
 	void outputRequested(const QString& line);
-	void tasksRequested(const QString& line);
+	void tasksRequested();
+	void logRequested();
 private:
 	QHash<QString, QString> commandMap;
 

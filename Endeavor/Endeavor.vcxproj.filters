@@ -49,6 +49,12 @@
     <ClCompile Include="TaskFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LogWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Commands.h">
@@ -57,9 +63,15 @@
     <QtMoc Include="TasksWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="LogWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="TasksWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="LogWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -68,6 +80,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TaskFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

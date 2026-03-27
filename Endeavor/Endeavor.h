@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_Endeavor.h"
 #include "TasksWindow.h"
+#include "LogWindow.h"
 #include "Commands.h"
 #include <QMovie>
 #include <QPoint>
@@ -26,6 +27,7 @@ private:
     Ui::EndeavorClass ui;
 
     TasksWindow* tasksWindow = nullptr;
+    LogWindow* logWindow = nullptr;
     
     Commands* commands = nullptr;
     void setEndeavorWindowSpecifications();

@@ -12,7 +12,8 @@ Endeavor::Endeavor(QWidget *parent)
     setEndeavorBanner();
 
     commands = new Commands(this);
-    tasksWindow = new TasksWindow(this);
+    tasksWindow = new TasksWindow();
+    logWindow = new LogWindow();
 
     setUpConnections();
 }
@@ -106,11 +107,16 @@ void Endeavor::setUpConnections() {
         ui.output->appendPlainText("> " + line);
         });
 
-    connect(commands, &Commands::tasksRequested, this, [this](const QString& line) {
-        ui.output->appendPlainText("> " + line);
+    connect(commands, &Commands::tasksRequested, this, [this]() {
+        //ui.output->appendPlainText("> ");
         tasksWindow->show();
         tasksWindow->raise();
         tasksWindow->activateWindow();
+        });
+    connect(commands, &Commands::logRequested, this, [this]() {
+        logWindow->show();
+        logWindow->raise();
+        logWindow->activateWindow();
         });
     connect(commands, &Commands::exitRequested, this, &QWidget::close);
 }
