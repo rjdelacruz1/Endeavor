@@ -22,10 +22,15 @@ private:
 
 	LogFile logFile;
 	QString logPath;
-	QListWidgetItem* itemBeingEdited = nullptr;
+	//QListWidgetItem* itemBeingEdited = nullptr;
 
 	void setLogWindowSpecifications();
 	void setUpConnections();
 	void addEntry();
+	void confirmEdit();
+	void populateLogList();
+	void populateLogList(const QDate& selectedDate);
+	void loadLogListEntry();
+	void cancelEdit();
 };
 

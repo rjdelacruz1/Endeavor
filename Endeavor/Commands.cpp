@@ -7,6 +7,8 @@ Commands::Commands(QObject* parent)
 	commandMap["QUIT"] = "EXIT";
 	commandMap["QQ"] = "EXIT";
 
+	commandMap["HELP"] = "HELP";
+
 	commandMap["TASK"] = "TASK";
 	commandMap["TASKS"] = "TASK";
 
@@ -36,6 +38,11 @@ void Commands::handle(const QString& input)
 		logCommand();
 		return;
 	}
+
+	if (upper == "HELP") {
+		
+		return;
+	}
 	
 	emit outputRequested("Invalid command.");
 }
@@ -46,6 +53,9 @@ QString Commands::resolveCommand(const QString& input) const {
 		return commandMap.value(upper);
 
 	return upper;
+}
+void Commands::helpCommand() {
+
 }
 void Commands::exitCommand()
 {

@@ -14,6 +14,7 @@ public:
 
 signals:
 	void exitRequested();
+	void helpCommand();
 	void outputRequested(const QString& line);
 	void tasksRequested();
 	void logRequested();
